@@ -3,9 +3,9 @@ use DateTime;
 
 sub commit_at_date{
   `touch .a`;
-  `git commit -am 'Drawing stuff' --date="$_[0]" >/dev/null`;
-  `git push > /dev/null`;
-  `rm .a`;
+  `git commit -amf 'Drawing stuff' --date="$_[0]"`;
+  `git push`;
+  `rm -f .a`;
 }
 
 my $dt = DateTime->new(
@@ -16,7 +16,8 @@ my $dt = DateTime->new(
 
 #Drawing the H
 for my $i (0..6) {
-  my $temp = $dt->add( days => 1 );
+  my $temp = $dt->add( days => 1 )->strftime('%d.%m.%Y');
+  print "Committing on $temp\n";
   commit_at_date($temp);
 }
 
